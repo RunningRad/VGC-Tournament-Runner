@@ -1,3 +1,5 @@
+import random
+
 # Gets the information of each player participating in the tournament, and enters them into the tournament.
 def enterPlayers():
     playerList = []
@@ -45,7 +47,7 @@ def removePlayers():
             print("Cannot remove any more players, as it would go beneath the required amount.")
         done = "x"
         while(done.lower() != "yes" and done.lower() != "no"):
-            done = input("Are you done adding new players (Yes/No): ")
+            done = input("Are you done removing players (Yes/No): ")
         if (done.lower() == "yes"):
             removingPlayers = False
 
@@ -64,4 +66,65 @@ while(doneWithList == False):
     else:
         doneWithList = True
 
+swissRounds = 0
+topCut = 0
+topCutPlayers = 0
+# Goes through the number of players and determines how large/if there is a top cut, and how many rounds of swiss there are.
+# 4-7, 3 rounds of swiss, no top cut.
+if (len(playerList) < 8):
+    swissRounds = 3
+    topCut = 0
+# 8, 3 rounds of swiss, top cut of 2.
+elif (len(playerList) == 8):
+    swissRounds = 3
+    topCut = 1
+# 9-16, 4 rounds of swiss, top cut of 4.
+elif (8 < len(playerList) <= 16):
+    swissRounds = 4
+    topCut = 2
+# 17-32, 5 rounds of swiss, top cut of 8.
+elif (17 <= len(playerList) <= 32):
+    swissRounds = 5
+    topCut = 3
+# 33-64, 6 rounds of swiss, top cut of 8.
+elif (33 <= len(playerList) <= 64):
+    swissRounds = 6
+    topCut = 3
+# 65-128, 7 rounds of swiss, top cut of 8.
+elif (65 <= len(playerList) <= 128):
+    swissRounds = 7
+    topCut = 3
+# 129-226, 8 rounds of swiss, top cut of 8.
+elif (129 <= len(playerList) <= 226):
+    swissRounds = 8
+    topCut = 3
+# 227-256, 8 rounds of swiss, top cut of 16.
+elif (227 <= len(playerList) <= 256):
+    swissRounds = 8
+    topCut = 4
+# 257-409, 9 rounds of swiss, top cut of 16.
+elif (257 <= len(playerList) <= 409):
+    swissRounds = 9
+    topCut = 4
+# 410-512, 9 rounds of swiss, top cut of 32
+elif (410 <= len(playerList) <= 512):
+    swissRounds = 9
+    topCut = 5
+# 513+, 10 rounds of swiss, top cut of 32
+elif (513 <= len(playerList)):
+    swissRounds = 10
+    topCut = 5
 
+print()
+if (topCut > 0):        
+    print("There are " + str(len(playerList)) + " players in the tournament, so there will be " + str(swissRounds)  + " rounds of swiss into a top cut of " + str(2 ** topCut) + "!")
+else:
+    print("There are " + str(len(playerList)) + " players in the tournament, so there will be " + str(swissRounds)  + " rounds of swiss with no top cut!")
+
+currentRound = 1
+
+while (currentRound <= swissRounds):
+    # Creates the matchups for the round:
+    print("Round " + str(currentRound) + " matchups:")
+
+    currentRound = currentRound + 1
